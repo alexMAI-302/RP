@@ -100,9 +100,18 @@ Ext.define('app.controller.RenewPlan', {
 	computeGroupInfo: function(){
 		var controller = this,
 			curVol = curDonevol = vol = weigth = goodsVolume = trucknum = pans = 0.0,
-			weightNull = weightAll = weight1 = weight2 = 0.0,
-			pansNull = pansAll = pans1 = pans2 = 0.0,
-			volumeNull = volumeAll = volume1 = volume2 = 0.0,
+			weightNull = weightAll /*= weight1 = weight2*/ = 0.0,
+			pansNull = pansAll /*= pans1 = pans2*/ = 0.0,
+			volumeNull = volumeAll /*= volume1 = volume2*/ = 0.0,
+			
+			weight_p = new array(trucknum),
+			pans_p = new array(trucknum),
+			volume = new array(trucknum),
+			for (i = 0; i < trucknum; i++)
+			{
+				weight_p[i] = pans_p[i] = volume[i] = 0;
+			},
+			
 			positions=0,
 			donevol = 0.0,
 			minvol,
@@ -131,7 +140,7 @@ Ext.define('app.controller.RenewPlan', {
 					pansNull+=pans;
 					volumeNull+=goodsVolume;
 				} else {
-					if(trucknum==1){
+					/*if(trucknum==1){
 						weight1+=weight;
 						pans1+=pans;
 						volume1+=goodsVolume;
@@ -141,6 +150,12 @@ Ext.define('app.controller.RenewPlan', {
 							pans2+=pans;
 							volume2+=goodsVolume;
 						}
+					}*/
+					for (i = 0; i < trucknum; i++ )
+					{
+						weight_w[i] += weight;
+						pans_p[i] += pans;
+						volume[i] += goodsVolume;
 					}
 				}
 				
@@ -152,8 +167,12 @@ Ext.define('app.controller.RenewPlan', {
 				{
 					name: 'Вес по маш.',
 					all: weightNull,
-					num1: weight1,
-					num2: weight2,
+					/*num1: weight1,
+					num2: weight2,*/
+					for(i=0; i<trucknum; i++)
+					{
+						'num' + 'i': weight_w[i];
+					},
 					siteRemains: renewPlan.get('sitevol') - volumeAll,
 					truckRemains: renewPlan.get('truckvol') - volumeAll,
 					positions: positions,
@@ -165,14 +184,22 @@ Ext.define('app.controller.RenewPlan', {
 				{
 					name: 'Под. по маш.',
 					all: pansNull,
-					num1: pans1,
-					num2: pans2
+					/*num1: pans1,
+					num2: pans2*/
+					for(i=0; i<trucknum; i++)
+					{
+						'num' + 'i': pans_p[i];
+					}
 				},
 				{
 					name: 'Объем по маш.',
 					all: volumeNull,
-					num1: volume1,
-					num2: volume2
+					/*num1: volume1,
+					num2: volume2*/
+					for(i=0; i<trucknum; i++)
+					{
+						'num' + 'i': volume[i];
+					}
 				}
 			]);
 		} else {
@@ -232,12 +259,16 @@ Ext.define('app.controller.RenewPlan', {
 		if(trucknum==null){
 			changeInfo('all');
 		} else {
-			if(trucknum==1){
+			/*if(trucknum==1){
 				changeInfo('num1');
 			} else {
 				if(trucknum==2){
 					changeInfo('num2');
 				}
+			}*/
+			for (i=0; i < trucknum; i++)
+			{
+				changeInfo('num' + 'i');
 			}
 		}
 		

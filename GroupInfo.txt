@@ -4,6 +4,14 @@ Ext.define('app.view.RenewPlan.GroupInfo', {
 	
 	height: 91,
 	id: 'RenewPlanGoodsInfoTable',
+	
+	
+		int trucknum = r.get('trucknum');
+		int i = 0;
+		
+		
+	
+	
 	store: {
 		model: 'app.model.RenewPlan.InfoTableModel',
 		proxy: {
@@ -24,7 +32,7 @@ Ext.define('app.view.RenewPlan.GroupInfo', {
 			menuDisabled: true,
 			sortable: false
 		},
-		{
+		/*{
 			xtype: 'numbercolumn',
 			format: '0.00',
 			dataIndex: 'num1',
@@ -37,6 +45,16 @@ Ext.define('app.view.RenewPlan.GroupInfo', {
 			format: '0.00',
 			dataIndex: 'num2',
 			header: '¹2',
+			menuDisabled: true,
+			sortable: false
+		},*/
+
+		for(i=0; i<trucknum; i++)
+		{
+			xtype: 'numbercolumn',
+			format: '0.00',
+			dataIndex: 'num'+'i',
+			header: '¹'+'i',
 			menuDisabled: true,
 			sortable: false
 		},
